@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="EarthLoc and EarthMatch for Astronaut Photography Fine-grained Localization.">
+  <meta name="keywords" content="EarthLoc, EarthMatch, Astronaut photography localization">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EarthLoc and EarthMatch</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="apple-touch-icon" sizes="144x144" href="static/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="static/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="static/images/favicon-16x16.png">
+  <link rel="manifest" href="static/images/site.webmanifest">
+  <link rel="mask-icon" href="static/images/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="static/images/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="static/images/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- Image compare utility. -->
+  <link href="./image-compare.css" rel="stylesheet" type="text/css" />
+  <script src="./image-compare.js" type="text/javascript"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet"
+    type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css" />
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" charset="utf-8" 
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,
+https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
+</head>
+
+<body>
+
+
+  <style>
+    /* Custom radio button styles */
+    .navbar-radio {
+      display: none;
+      /* Hide the default radio button */
+    }
+
+    /* Fancy styles for the custom radio buttons */
+    .navbar-radio {
+      cursor: pointer;
+      padding: 30px 30px;
+      /* Increase padding for larger size */
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      /* Increase border radius for rounded corners */
+      margin: 0 10px;
+      /* Add margin between radio buttons */
+      background-color: #fff;
+      color: #333;
+      transition: all 0.3s ease;
+      display: inline-block;
+      /* Make labels display inline */
+      line-height: 1;
+      /* Center content vertically */
+    }
+
+    /* Styling for checked state */
+    .navbar-radio:checked+label {
+      background-color: #007bff;
+      color: #fff;
+      border-color: #007bff;
+    }
+
+    /* Hover effect */
+    .navbar-radio+label:hover {
+      background-color: #f5f5f5;
+    }
+  </style>
+
+  <section class="hero" id="common">
+    <div class="hero-body" style="padding-top:0; padding-bottom:10px;">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 style="margin-top:0;" class="title is-1 publication-title">Automated Geolocalization Techniques for Astronaut Photography</h1>
+            <div class="content has-text-justified">
+              <p>
+              The precise localization of astronaut photography is vital for various applications, including disaster response, 
+              scientific research, and climate change studies. Despite its significance, accurately pinpointing the geographical 
+              locations depicted in these images has proven challenging. Manual localization efforts are time-consuming, 
+              prompting the need for automated solutions. The proposed approaches introduce innovative methods to tackle this 
+              challenge efficiently, showcasing advancements in automating the localization process.
+                
+              </p>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <div class="navbar-item">
+          <input type="radio" id="earthloc" name="menu" class="navbar-radio" checked value="earthloc"
+            style="transform: scale(1.5); margin-right: 5px;">
+          EarthLoc
+          <input type="radio" id="earthmatch" name="menu" class="navbar-radio" value="earthmatch"
+            style="transform: scale(1.5); margin-left: 10px;">
+          EarthMatch
+        </div>
+      </div>
+    </div>
+
+  </nav>
+
+
+
+  <section class="hero" id="switch">
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var radios = document.querySelectorAll('input[name="menu"]');
+      var heroSection = document.querySelector('#switch');
+
+      // Function to change content based on selected radio button
+      function changeContent(radio) {
+        switch (radio.value) {
+          case "earthloc":
+            heroSection.innerHTML = `
+          <div class="hero-body" style="padding-top:0;">
+            <div class="container is-max-desktop">
+              <div class="columns is-centered">
+                <div class="column has-text-centered">
+                  <h1 style="margin-top:0;" class="title is-3 publication-title">EarthLoc: Astronaut Photography Localization by Indexing Earth from Space</h1>
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">
+                      <a href="https://gmberton.github.io/">Gabriele Berton</a><sup>1</sup>,</span>
+                    <span class="author-block">
+                      <a href="https://ares.jsc.nasa.gov/people/bios/alex-h-stoken/">Alex Stoken</a><sup>2</sup>,</span>
+                    <span class="author-block">
+                      <a href="https://vandal.polito.it/index.php/people/barbaracaputo/">Barbara Caputo</a><sup>1</sup>,
+                    </span>
+                    <span class="author-block">
+                      <a href="https://www.carlomasone.com/">Carlo Masone</a><sup>1</sup>
+                    </span>
+                  </div>
+        
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block"><sup>1</sup>Politecnico di Torino,</span>
+                    <span class="author-block"><sup>2</sup>Jacobs Technology, NASA Johnson Space Center</span>
+                  </div>
+        
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                      <!-- PDF Link. -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/2403.06758.pdf"
+                           class="external-link button is-normal is-rounded is-dark">
+                          <span class="icon">
+                              <i class="fas fa-file-pdf"></i>
+                          </span>
+                          <span>Paper</span>
+                        </a>
+                      </span>
+                      <span class="link-block">
+                        <a href="https://arxiv.org/abs/2403.06758"
+                           class="external-link button is-normal is-rounded is-dark">
+                          <span class="icon">
+                              <i class="ai ai-arxiv"></i>
+                          </span>
+                          <span>arXiv</span>
+                        </a>
+                      </span>
+                      <!-- Code Link. -->
+                      <span class="link-block">
+                        <a href="https://github.com/gmberton/EarthLoc"
+                           class="external-link button is-normal is-rounded is-dark">
+                          <span class="icon">
+                              <i class="fab fa-github"></i>
+                          </span>
+                          <span>Code</span>
+                          </a>
+                      </span>
+                    </div>
+        
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Image -->
+                <div class="columns is-centered">
+                    <img src="static/images/earthloc.png" alt="EarthLoc teaser" style="height:400px;">
+                  </div>
+                <!--/ Image -->
+          </div>`;
+            break;
+          case "earthmatch":
+            heroSection.innerHTML = `
+          <div class="hero-body" style="padding-top:0;">
+            <div class="container is-max-desktop">
+              <div class="columns is-centered">
+                <div class="column has-text-centered">
+                  <h1 style="margin-top:0;" class="title is-3 publication-title">EarthMatch: Iterative Coregistration for Fine-grained Localization of Astronaut
+                    Photography</h1>
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">
+                      <a href="https://gmberton.github.io/">Gabriele Berton</a><sup>1</sup>,</span>
+                    <span class="author-block">
+                      <a href="https://ezius07.github.io/">Gabriele Goletto</a><sup>1</sup>,</span>
+                    <span class="author-block">
+                      <a href="https://scholar.google.com/citations?user=JXf_iToAAAAJ&hl=it&oi=ao">Gabriele Trivigno</a><sup>1</sup>,</span>
+                    <span class="author-block">
+                      <a href="https://ares.jsc.nasa.gov/people/bios/alex-h-stoken/">Alex Stoken</a><sup>2</sup>,</span>
+                    <span class="author-block">
+                      <a href="https://vandal.polito.it/index.php/people/barbaracaputo/">Barbara Caputo</a><sup>1</sup>,
+                    </span>
+                    <span class="author-block">
+                      <a href="https://www.carlomasone.com/">Carlo Masone</a><sup>1</sup>
+                    </span>
+                  </div>
+        
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block"><sup>1</sup>Politecnico di Torino,</span>
+                    <span class="author-block"><sup>2</sup>Jacobs Technology, NASA Johnson Space Center</span>
+                  </div>
+        
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                      <!-- PDF Link. -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/2403.06758.pdf"
+                           class="external-link button is-normal is-rounded is-dark">
+                          <span class="icon">
+                              <i class="fas fa-file-pdf"></i>
+                          </span>
+                          <span>Paper</span>
+                        </a>
+                      </span>
+                      <span class="link-block">
+                        <a href="https://arxiv.org/abs/2403.06758"
+                           class="external-link button is-normal is-rounded is-dark">
+                          <span class="icon">
+                              <i class="ai ai-arxiv"></i>
+                          </span>
+                          <span>arXiv</span>
+                        </a>
+                      </span>
+                      <!-- Code Link. -->
+                      <span class="link-block">
+                        <a href="https://github.com/gmberton/EarthLoc"
+                           class="external-link button is-normal is-rounded is-dark">
+                          <span class="icon">
+                              <i class="fab fa-github"></i>
+                          </span>
+                          <span>Code</span>
+                          </a>
+                      </span>
+                    </div>
+        
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Image -->
+                <div class="columns is-centered">
+                  <div class="column is-four-fifths" style="display: flex; justify-content: center;">
+                    <img src="static/images/earthmatch.png" style="width:800px;" alt="EarthMatch teaser">
+                  </div>
+                </div>
+                <!--/ Image -->
+          </div>`;
+            break;
+          // Add cases for other radio button values as needed
+          // Repeat this pattern for each radio button value
+          default:
+            // Default content if no matching value is found
+            heroSection.innerHTML = `
+            <div class="hero-body">
+              <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                  <div class="column has-text-centered">
+                    <h1 class="title is-1 publication-title">Default Content</h1>
+                    <p>This is the default content...</p>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+        }
+      }
+
+      // Trigger change event for checked radio button on page load
+      var checkedRadio = document.querySelector('input[name="menu"]:checked');
+      if (checkedRadio) {
+        changeContent(checkedRadio);
+      }
+
+      // Add change event listener to all radio buttons
+      radios.forEach(function (radio) {
+        radio.addEventListener("change", function () {
+          changeContent(this);
+        });
+      });
+    });
+  </script>
+
+  <section class="section hero is-light" id="abstract">
+  </section>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var radios = document.querySelectorAll('input[name="menu"]');
+      var heroSection = document.querySelector('#abstract');
+
+      // Function to change content based on selected radio button
+      function changeContent(radio) {
+        switch (radio.value) {
+          case "earthloc":
+            heroSection.innerHTML = `
+              <div class="container is-max-desktop">
+                <!-- Abstract. -->
+                <div class="columns is-centered has-text-centered">
+                  <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                      <p>
+                        Astronaut photography, spanning six decades of human spaceflight, 
+                        presents a unique Earth observations dataset with immense value for 
+                        both scientific research and disaster response. 
+                      </p>
+                      <p>
+                        Despite its significance, accurately localizing the geographical extent of these images, 
+                        crucial for effective utilization, poses substantial challenges. Current manual localization 
+                        efforts are time-consuming, motivating the need for automated solutions. 
+                      </p>
+                      <p>
+                        We propose a novel approach - leveraging image retrieval - to address this challenge efficiently. 
+                        We introduce innovative training techniques, including Year-Wise Data Augmentation and a 
+                        Neutral-Aware Multi-Similarity Loss, which contribute to the development of a 
+                        high-performance model, EarthLoc. We develop six evaluation datasets and perform a 
+                        comprehensive benchmark comparing EarthLoc to existing methods, showcasing its 
+                        superior efficiency and accuracy. Our approach marks a significant advancement in 
+                        automating the localization of astronaut photography, which will help bridge a critical gap in Earth observations data. 
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <!--/ Abstract. -->
+              </div>
+              `;
+            break;
+          case "earthmatch":
+            heroSection.innerHTML = `
+              <div class="container is-max-desktop">
+                <!-- Abstract. -->
+                <div class="columns is-centered has-text-centered">
+                  <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                      <p>
+                        Precise, pixel-wise geolocalization of astronaut photography is critical to 
+                        unlocking the potential of this unique type of remotely sensed Earth data, 
+                        particularly for its use in disaster management and climate change research. 
+                      </p>
+                      <p>
+                        Recent works have established the Astronaut Photography Localization task, 
+                        but have either proved too costly for mass deployment or generated too coarse a localization. 
+                        Thus, we present EarthMatch, an iterative homography estimation method 
+                        that produces fine-grained localization of astronaut photographs while
+                        maintaining an emphasis on speed. We refocus the astronaut photography benchmark,
+                        AIMS, on the geolocalization task itself, and prove our method's efficacy on this dataset. 
+                        In addition, we offer a new, fair method for image matcher comparison, and an 
+                        extensive evaluation of different matching models within our localization pipeline. 
+                        Our method will enable fast and accurate localization of the 4.5 million and growing 
+                        collection of astronaut photography of Earth.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <!--/ Abstract. -->
+              </div>
+              `;
+            break;
+          // Add cases for other radio button values as needed
+          // Repeat this pattern for each radio button value
+          default:
+            // Default content if no matching value is found
+            heroSection.innerHTML = `
+              <div class="container is-max-desktop">
+                <!-- Abstract. -->
+                <div class="columns is-centered has-text-centered">
+                  <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                      <p>
+                        Unkown abstract.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <!--/ Abstract. -->
+              </div>
+              `;
+        }
+      }
+
+      // Trigger change event for checked radio button on page load
+      var checkedRadio = document.querySelector('input[name="menu"]:checked');
+      if (checkedRadio) {
+        changeContent(checkedRadio);
+      }
+
+      // Add change event listener to all radio buttons
+      radios.forEach(function (radio) {
+        radio.addEventListener("change", function () {
+          changeContent(this);
+        });
+      });
+    });
+  </script>
+
+  <section class="section hero">
+    <div class="container is-max-desktop">
+
+      <div class="columns is-centered">
+
+        <!-- Dataset -->
+        <div class="column is-full-width">
+          <div class="content">
+            <h2 class="title is-3" style="text-align: center;">Dataset</h2>
+            <img src="./static/images/dataset.png" />
+            In order to determine the positions of the queries using image retrieval,
+            it is necessary to have a global database of images, with each image tagged
+            with its corresponding location. We create such a database using a publicly
+            available compilation of <a rel="license" href="https://s2maps.eu/" target="_blank">Sentinel-2 satellite
+              imagery</a>,
+            which offers cloudless coverage of landmasses worldwide with resolutions of up to 15 meters per pixel.
+          </div>
+        </div>
+        <!--/ Dataset -->
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+
+      <div class="columns is-centered">
+
+        <!-- Training strategy -->
+        <div class="column is-full-width">
+          <div class="content">
+            <h2 class="title is-3" style="text-align: center;">Training strategy</h2>
+            <img src="./static/images/training.png" />
+            Naive batching leads to a task that's too easy for the model to learn from.
+            To overcome this, we introduce a more challenging setup. By clustering batches
+            based on similarity and introducing year-wise augmentations, we create a scenario
+            where images from different regions but the same year are brought closer together
+            in feature space. This forces the model to develop representations that can discern similarity within this
+            more complex context.
+          </div>
+        </div>
+        <!--/ Training strategy -->
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="section hero">
+    <div class="container is-max-desktop">
+
+      <div class="columns is-centered">
+
+        <!-- Qualitative Results. -->
+        <div class="column is-full-width">
+          <div class="content">
+            <h2 class="title is-3" style="text-align: center;">Qualitative results</h2>
+            <div class="switcher">
+              <div data-switcher-label="Qualitative 1" class="image-compare" data-before-label="Photo"
+                data-after-label="Localized Area">
+                <img src="./static/images/qualitative/pred1.jpg" />
+                <img src="./static/images/qualitative/qual1.jpg" />
+              </div>
+              <div data-switcher-label="Qualitative 2" class="image-compare" data-before-label="Photo"
+                data-after-label="Localized Area">
+                <img src="./static/images/qualitative/pred1.jpg" />
+                <img src="./static/images/qualitative/qual1.jpg" />
+              </div>
+              <div data-switcher-label="Qualitative 3" class="image-compare" data-before-label="Photo"
+                data-after-label="Localized Area">
+                <img src="./static/images/qualitative/pred1.jpg" />
+                <img src="./static/images/qualitative/qual1.jpg" />
+              </div>
+              <div data-switcher-label="Qualitative 4" class="image-compare" data-before-label="Photo"
+                data-after-label="Localized Area">
+                <img src="./static/images/qualitative/pred1.jpg" />
+                <img src="./static/images/qualitative/qual1.jpg" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!--/ Qualitative Results. -->
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero">
+    <div class="container is-max-desktop">
+
+      <div class="columns is-centered">
+
+        <!-- Training strategy -->
+        <div class="column is-full-width">
+          <div class="content">
+            <h2 class="title is-3" style="text-align: center;">Complete pipeline</h2>
+            <img src="./static/images/pipeline.png" />
+            We suggest a hierarchical pipeline for tackling the astronaut photography localization task
+            and accurately pinpointing astronaut photographs. Our method draws inspiration from
+            re-ranking strategies commonly employed in Image Retrieval and Visual Place Recognition.
+            Initially, a swift retrieval technique is utilized to generate a brief list of candidates.
+            Subsequently, a more resource-intensive matching process is employed to fine-tune the estimation.
+          </div>
+        </div>
+        <!--/ Training strategy -->
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <!-- Animation. -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content">
+            <h2 class="title is-3" style="text-align: center;">Matching iterations</h2>
+            <div class="content has-text-justified">
+              <p>
+                The procedure starts with matching the query $Q$ and the candidate $C_0$
+                to produce a first homography $H_0$. The candidate surroundings $C_s$ is generated and $H_0$ applied to
+                produce $C_1$. $C_1$ is then matched with
+                $Q$, producing $H_2$ which applied to $C_s$ yields $C_2$. This iterative process continues for a fixed
+                number of iterations or until convergence.
+                Note the number of inlier matches increases steadily for each iteration. Use the slider to observe the
+                different matching iterations.
+              </p>
+            </div>
+            <div class="columns is-vcentered interpolation-panel">
+              <div class="column is-3 has-text-centered">
+                <img src="./static/images/qualitative_steps/start.jpg" class="interpolation-image"
+                  alt="Interpolate start reference image." />
+                <p>Photo query $Q$</p>
+              </div>
+              <div class="column interpolation-video-column">
+                <div id="interpolation-image-wrapper">
+                  Loading...
+                </div>
+                <input class="slider is-fullwidth is-large is-info" id="interpolation-slider" step="1" min="0" max="100"
+                  value="0" type="range">
+              </div>
+              <div class="column is-3 has-text-centered">
+                <img src="./static/images/qualitative_steps/big_img.jpg" class="interpolation-image"
+                  alt="Interpolation end reference image." />
+                <p class="is-bold">Candidate surroundings $C_s$</p>
+              </div>
+            </div>
+            <br />
+            <!--/ Interpolating. -->
+
+          </div>
+        </div>
+      </div>
+      <!--/ Animation. -->
+    </div>
+  </section>
+
+
+  <section class="section" id="BibTeX">
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var radios = document.querySelectorAll('input[name="menu"]');
+      var heroSection = document.querySelector('#BibTeX');
+
+      // Function to change content based on selected radio button
+      function changeContent(radio) {
+        switch (radio.value) {
+          case "earthloc":
+            heroSection.innerHTML = `
+              <div class="container is-max-desktop content">
+                <h2 class="title">BibTeX</h2>
+                <pre><code>@inproceedings{berton2024earthloc,
+                  title={EarthLoc: Astronaut Photography Localization by Indexing Earth from Space},
+                  author={Berton, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
+                  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+                  year={2024}
+                }</code></pre>
+              </div>`;
+            break;
+          case "earthmatch":
+            heroSection.innerHTML = `
+              <div class="container is-max-desktop content">
+                <h2 class="title">BibTeX</h2>
+                <pre><code>@inproceedings{berton2024earthmath,
+                  title={EarthMatch: Iterative Coregistration for Fine-grained Localization of Astronaut Photography},
+                  author={Berton, Gabriele and Goletto, Gabriele and Trivigno, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
+                  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR-W)},
+                  year={2024}
+              }</code></pre>
+              </div>`;
+            break;
+          // Add cases for other radio button values as needed
+          // Repeat this pattern for each radio button value
+          default:
+            // Default content if no matching value is found
+            heroSection.innerHTML = `
+              <div class="container is-max-desktop content">
+                <h2 class="title">BibTeX</h2>
+                <pre><code>@inproceedings{
+              }</code></pre>
+              </div>`;
+        }
+      }
+
+      // Trigger change event for checked radio button on page load
+      var checkedRadio = document.querySelector('input[name="menu"]:checked');
+      if (checkedRadio) {
+        changeContent(checkedRadio);
+      }
+
+      // Add change event listener to all radio buttons
+      radios.forEach(function (radio) {
+        radio.addEventListener("change", function () {
+          changeContent(this);
+        });
+      });
+    });
+  </script>
+
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page. <br>
+              The video comparison tool uses elements from <a href="https://brentyi.github.io/tilted/"
+                target="_blank">TITLED</a> page. <br>
+              This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"
+                target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
