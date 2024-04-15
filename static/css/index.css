@@ -155,3 +155,11 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+img {
+  -khtml-user-select: none;
+  -o-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
