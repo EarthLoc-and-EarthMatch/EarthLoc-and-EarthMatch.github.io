@@ -56,8 +56,7 @@
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
   </script>
-  <script type="text/javascript" charset="utf-8" 
-src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,
+  <script type="text/javascript" charset="utf-8" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,
 https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
 </head>
 
@@ -108,17 +107,22 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 style="margin-top:0;" class="title is-1 publication-title">Automated Geolocalization Techniques for Astronaut Photography</h1>
+            <h1 style="margin-top:0;" class="title is-1 publication-title">Automated Geolocalization Techniques for
+              Astronaut Photography</h1>
             <div class="content has-text-justified">
               <p>
-              The precise localization of astronaut photography is vital for various applications, including disaster response, 
-              scientific research, and climate change studies. Despite its significance, accurately pinpointing the geographical 
-              locations depicted in these images has proven challenging. Manual localization efforts are time-consuming, 
-              prompting the need for automated solutions. The proposed approaches introduce innovative methods to tackle this 
-              challenge efficiently, showcasing advancements in automating the localization process.
-                
+                The precise localization of astronaut photography is vital for various applications, including disaster
+                response,
+                scientific research, and climate change studies. Despite its significance, accurately pinpointing the
+                geographical
+                locations depicted in these images has proven challenging. Manual localization efforts are
+                time-consuming,
+                prompting the need for automated solutions. The proposed approaches introduce innovative methods to
+                tackle this
+                challenge efficiently, showcasing advancements in automating the localization process.
+
               </p>
-              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -135,329 +139,232 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
       <span class="toggle-text"><b>EarthMatch</b></span>
     </div>
   </nav>
-  
+
+  <div id="earthloc-content">
+    <!-- Content for EarthLoc -->
+    <section class="hero" id="switch">
+      <div class="hero-body" style="padding-top:0;">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 style="margin-top:0;" class="title is-3 publication-title">EarthLoc: Astronaut Photography
+                Localization by Indexing Earth from Space</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="https://gmberton.github.io/">Gabriele Berton</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  <a href="https://ares.jsc.nasa.gov/people/bios/alex-h-stoken/">Alex Stoken</a><sup>2</sup>,</span>
+                <span class="author-block">
+                  <a href="https://vandal.polito.it/index.php/people/barbaracaputo/">Barbara Caputo</a><sup>1</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://www.carlomasone.com/">Carlo Masone</a><sup>1</sup>
+                </span>
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"><sup>1</sup>Politecnico di Torino,</span>
+                <span class="author-block"><sup>2</sup>Jacobs Technology, NASA Johnson Space Center</span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- PDF Link. -->
+                  <span class="link-block">
+                    <a href="https://arxiv.org/pdf/2403.06758.pdf"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/2403.06758"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+                  <!-- Code Link. -->
+                  <span class="link-block">
+                    <a href="https://github.com/gmberton/EarthLoc"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Image -->
+        <div class="columns is-centered">
+          <img src="static/images/earthloc.png" alt="EarthLoc teaser" style="height:400px;">
+        </div>
+        <!--/ Image -->
+      </div>
+    </section>
+    <section class="section hero is-light" id="abstract">
+      <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Astronaut photography, spanning six decades of human spaceflight,
+                presents a unique Earth observations dataset with immense value for
+                both scientific research and disaster response.
+              </p>
+              <p>
+                Despite its significance, accurately localizing the geographical extent of these images,
+                crucial for effective utilization, poses substantial challenges. Current manual localization
+                efforts are time-consuming, motivating the need for automated solutions.
+              </p>
+              <p>
+                We propose a novel approach - leveraging image retrieval - to address this challenge efficiently.
+                We introduce innovative training techniques, including Year-Wise Data Augmentation and a
+                Neutral-Aware Multi-Similarity Loss, which contribute to the development of a
+                high-performance model, EarthLoc. We develop six evaluation datasets and perform a
+                comprehensive benchmark comparing EarthLoc to existing methods, showcasing its
+                superior efficiency and accuracy. Our approach marks a significant advancement in
+                automating the localization of astronaut photography, which will help bridge a critical gap in Earth
+                observations data.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!--/ Abstract. -->
+      </div>
+    </section>
+  </div>
+
+  <div id="earthmatch-content" style="display: none;">
+    <!-- Content for EarthMatch -->
+    <section class="hero" id="switch">
+      <div class="hero-body" style="padding-top:0;">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 style="margin-top:0;" class="title is-3 publication-title">EarthMatch: Iterative Coregistration for
+                Fine-grained Localization of Astronaut
+                Photography</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="https://gmberton.github.io/">Gabriele Berton</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  <a href="https://ezius07.github.io/">Gabriele Goletto</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  <a href="https://scholar.google.com/citations?user=JXf_iToAAAAJ&hl=it&oi=ao">Gabriele
+                    Trivigno</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  <a href="https://ares.jsc.nasa.gov/people/bios/alex-h-stoken/">Alex Stoken</a><sup>2</sup>,</span>
+                <span class="author-block">
+                  <a href="https://vandal.polito.it/index.php/people/barbaracaputo/">Barbara Caputo</a><sup>1</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="https://www.carlomasone.com/">Carlo Masone</a><sup>1</sup>
+                </span>
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"><sup>1</sup>Politecnico di Torino,</span>
+                <span class="author-block"><sup>2</sup>Jacobs Technology, NASA Johnson Space Center</span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- PDF Link. -->
+                  <span class="link-block">
+                    <a href="https://arxiv.org/pdf/2403.06758.pdf"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/2403.06758"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+                  <!-- Code Link. -->
+                  <span class="link-block">
+                    <a href="https://github.com/gmberton/EarthLoc"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Image -->
+        <div class="columns is-centered">
+          <div class="column is-four-fifths" style="display: flex; justify-content: center;">
+            <img src="static/images/earthmatch.png" style="width:800px;" alt="EarthMatch teaser">
+          </div>
+        </div>
+        <!--/ Image -->
+      </div>
+    </section>
+    <section class="section hero is-light" id="abstract">
+      <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Precise, pixel-wise geolocalization of astronaut photography is critical to
+                unlocking the potential of this unique type of remotely sensed Earth data,
+                particularly for its use in disaster management and climate change research.
+              </p>
+              <p>
+                Recent works have established the Astronaut Photography Localization task,
+                but have either proved too costly for mass deployment or generated too coarse a localization.
+                Thus, we present EarthMatch, an iterative homography estimation method
+                that produces fine-grained localization of astronaut photographs while
+                maintaining an emphasis on speed. We refocus the astronaut photography benchmark,
+                AIMS, on the geolocalization task itself, and prove our method's efficacy on this dataset.
+                In addition, we offer a new, fair method for image matcher comparison, and an
+                extensive evaluation of different matching models within our localization pipeline.
+                Our method will enable fast and accurate localization of the 4.5 million and growing
+                collection of astronaut photography of Earth.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!--/ Abstract. -->
+      </div>
+    </section>
+  </div>
+
   <script>
     function toggleSwitch() {
       var toggle = document.getElementById("toggle");
-    
-      if (toggle.checked) {
-        toggle.value = "earthmatch";
-      } else {
-        toggle.value = "earthloc";
-      }
-      toggle.dispatchEvent(new Event('change'));
+
+      // Toggle visibility based on checkbox state
+      document.getElementById('earthloc-content').style.display = toggle.checked ? 'none' : 'block';
+      document.getElementById('earthmatch-content').style.display = toggle.checked ? 'block' : 'none';
     }
-
-    window.onload = function() {
-      toggleSwitch();
-    };
-  </script>
-
-
-
-  <section class="hero" id="switch">
-  </section>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var radios = document.querySelectorAll('input[name="menu"]');
-      var heroSection = document.querySelector('#switch');
-
-      // Function to change content based on selected radio button
-      function changeContent(radio) {
-        switch (radio.value) {
-          case "earthloc":
-            heroSection.innerHTML = `
-          <div class="hero-body" style="padding-top:0;">
-            <div class="container is-max-desktop">
-              <div class="columns is-centered">
-                <div class="column has-text-centered">
-                  <h1 style="margin-top:0;" class="title is-3 publication-title">EarthLoc: Astronaut Photography Localization by Indexing Earth from Space</h1>
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block">
-                      <a href="https://gmberton.github.io/">Gabriele Berton</a><sup>1</sup>,</span>
-                    <span class="author-block">
-                      <a href="https://ares.jsc.nasa.gov/people/bios/alex-h-stoken/">Alex Stoken</a><sup>2</sup>,</span>
-                    <span class="author-block">
-                      <a href="https://vandal.polito.it/index.php/people/barbaracaputo/">Barbara Caputo</a><sup>1</sup>,
-                    </span>
-                    <span class="author-block">
-                      <a href="https://www.carlomasone.com/">Carlo Masone</a><sup>1</sup>
-                    </span>
-                  </div>
-        
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block"><sup>1</sup>Politecnico di Torino,</span>
-                    <span class="author-block"><sup>2</sup>Jacobs Technology, NASA Johnson Space Center</span>
-                  </div>
-        
-                  <div class="column has-text-centered">
-                    <div class="publication-links">
-                      <!-- PDF Link. -->
-                      <span class="link-block">
-                        <a href="https://arxiv.org/pdf/2403.06758.pdf"
-                           class="external-link button is-normal is-rounded is-dark">
-                          <span class="icon">
-                              <i class="fas fa-file-pdf"></i>
-                          </span>
-                          <span>Paper</span>
-                        </a>
-                      </span>
-                      <span class="link-block">
-                        <a href="https://arxiv.org/abs/2403.06758"
-                           class="external-link button is-normal is-rounded is-dark">
-                          <span class="icon">
-                              <i class="ai ai-arxiv"></i>
-                          </span>
-                          <span>arXiv</span>
-                        </a>
-                      </span>
-                      <!-- Code Link. -->
-                      <span class="link-block">
-                        <a href="https://github.com/gmberton/EarthLoc"
-                           class="external-link button is-normal is-rounded is-dark">
-                          <span class="icon">
-                              <i class="fab fa-github"></i>
-                          </span>
-                          <span>Code</span>
-                          </a>
-                      </span>
-                    </div>
-        
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Image -->
-                <div class="columns is-centered">
-                    <img src="static/images/earthloc.png" alt="EarthLoc teaser" style="height:400px;">
-                  </div>
-                <!--/ Image -->
-          </div>`;
-            break;
-          case "earthmatch":
-            heroSection.innerHTML = `
-          <div class="hero-body" style="padding-top:0;">
-            <div class="container is-max-desktop">
-              <div class="columns is-centered">
-                <div class="column has-text-centered">
-                  <h1 style="margin-top:0;" class="title is-3 publication-title">EarthMatch: Iterative Coregistration for Fine-grained Localization of Astronaut
-                    Photography</h1>
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block">
-                      <a href="https://gmberton.github.io/">Gabriele Berton</a><sup>1</sup>,</span>
-                    <span class="author-block">
-                      <a href="https://ezius07.github.io/">Gabriele Goletto</a><sup>1</sup>,</span>
-                    <span class="author-block">
-                      <a href="https://scholar.google.com/citations?user=JXf_iToAAAAJ&hl=it&oi=ao">Gabriele Trivigno</a><sup>1</sup>,</span>
-                    <span class="author-block">
-                      <a href="https://ares.jsc.nasa.gov/people/bios/alex-h-stoken/">Alex Stoken</a><sup>2</sup>,</span>
-                    <span class="author-block">
-                      <a href="https://vandal.polito.it/index.php/people/barbaracaputo/">Barbara Caputo</a><sup>1</sup>,
-                    </span>
-                    <span class="author-block">
-                      <a href="https://www.carlomasone.com/">Carlo Masone</a><sup>1</sup>
-                    </span>
-                  </div>
-        
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block"><sup>1</sup>Politecnico di Torino,</span>
-                    <span class="author-block"><sup>2</sup>Jacobs Technology, NASA Johnson Space Center</span>
-                  </div>
-        
-                  <div class="column has-text-centered">
-                    <div class="publication-links">
-                      <!-- PDF Link. -->
-                      <span class="link-block">
-                        <a href="https://arxiv.org/pdf/2403.06758.pdf"
-                           class="external-link button is-normal is-rounded is-dark">
-                          <span class="icon">
-                              <i class="fas fa-file-pdf"></i>
-                          </span>
-                          <span>Paper</span>
-                        </a>
-                      </span>
-                      <span class="link-block">
-                        <a href="https://arxiv.org/abs/2403.06758"
-                           class="external-link button is-normal is-rounded is-dark">
-                          <span class="icon">
-                              <i class="ai ai-arxiv"></i>
-                          </span>
-                          <span>arXiv</span>
-                        </a>
-                      </span>
-                      <!-- Code Link. -->
-                      <span class="link-block">
-                        <a href="https://github.com/gmberton/EarthLoc"
-                           class="external-link button is-normal is-rounded is-dark">
-                          <span class="icon">
-                              <i class="fab fa-github"></i>
-                          </span>
-                          <span>Code</span>
-                          </a>
-                      </span>
-                    </div>
-        
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Image -->
-                <div class="columns is-centered">
-                  <div class="column is-four-fifths" style="display: flex; justify-content: center;">
-                    <img src="static/images/earthmatch.png" style="width:800px;" alt="EarthMatch teaser">
-                  </div>
-                </div>
-                <!--/ Image -->
-          </div>`;
-            break;
-          // Add cases for other radio button values as needed
-          // Repeat this pattern for each radio button value
-          default:
-            // Default content if no matching value is found
-            heroSection.innerHTML = `
-            <div class="hero-body">
-              <div class="container is-max-desktop">
-                <div class="columns is-centered">
-                  <div class="column has-text-centered">
-                    <h1 class="title is-1 publication-title">Default Content</h1>
-                    <p>This is the default content...</p>
-                  </div>
-                </div>
-              </div>
-            </div>`;
-        }
-      }
-
-      // Trigger change event for checked radio button on page load
-      var checkedRadio = document.querySelector('input[name="menu"]:checked');
-      if (checkedRadio) {
-        changeContent(checkedRadio);
-      }
-
-      // Add change event listener to all radio buttons
-      radios.forEach(function (radio) {
-        radio.addEventListener("change", function () {
-          changeContent(this);
-        });
-      });
-    });
-  </script>
-
-  <section class="section hero is-light" id="abstract">
-  </section>
-
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var radios = document.querySelectorAll('input[name="menu"]');
-      var heroSection = document.querySelector('#abstract');
-
-      // Function to change content based on selected radio button
-      function changeContent(radio) {
-        switch (radio.value) {
-          case "earthloc":
-            heroSection.innerHTML = `
-              <div class="container is-max-desktop">
-                <!-- Abstract. -->
-                <div class="columns is-centered has-text-centered">
-                  <div class="column is-four-fifths">
-                    <h2 class="title is-3">Abstract</h2>
-                    <div class="content has-text-justified">
-                      <p>
-                        Astronaut photography, spanning six decades of human spaceflight, 
-                        presents a unique Earth observations dataset with immense value for 
-                        both scientific research and disaster response. 
-                      </p>
-                      <p>
-                        Despite its significance, accurately localizing the geographical extent of these images, 
-                        crucial for effective utilization, poses substantial challenges. Current manual localization 
-                        efforts are time-consuming, motivating the need for automated solutions. 
-                      </p>
-                      <p>
-                        We propose a novel approach - leveraging image retrieval - to address this challenge efficiently. 
-                        We introduce innovative training techniques, including Year-Wise Data Augmentation and a 
-                        Neutral-Aware Multi-Similarity Loss, which contribute to the development of a 
-                        high-performance model, EarthLoc. We develop six evaluation datasets and perform a 
-                        comprehensive benchmark comparing EarthLoc to existing methods, showcasing its 
-                        superior efficiency and accuracy. Our approach marks a significant advancement in 
-                        automating the localization of astronaut photography, which will help bridge a critical gap in Earth observations data. 
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Abstract. -->
-              </div>
-              `;
-            break;
-          case "earthmatch":
-            heroSection.innerHTML = `
-              <div class="container is-max-desktop">
-                <!-- Abstract. -->
-                <div class="columns is-centered has-text-centered">
-                  <div class="column is-four-fifths">
-                    <h2 class="title is-3">Abstract</h2>
-                    <div class="content has-text-justified">
-                      <p>
-                        Precise, pixel-wise geolocalization of astronaut photography is critical to 
-                        unlocking the potential of this unique type of remotely sensed Earth data, 
-                        particularly for its use in disaster management and climate change research. 
-                      </p>
-                      <p>
-                        Recent works have established the Astronaut Photography Localization task, 
-                        but have either proved too costly for mass deployment or generated too coarse a localization. 
-                        Thus, we present EarthMatch, an iterative homography estimation method 
-                        that produces fine-grained localization of astronaut photographs while
-                        maintaining an emphasis on speed. We refocus the astronaut photography benchmark,
-                        AIMS, on the geolocalization task itself, and prove our method's efficacy on this dataset. 
-                        In addition, we offer a new, fair method for image matcher comparison, and an 
-                        extensive evaluation of different matching models within our localization pipeline. 
-                        Our method will enable fast and accurate localization of the 4.5 million and growing 
-                        collection of astronaut photography of Earth.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Abstract. -->
-              </div>
-              `;
-            break;
-          // Add cases for other radio button values as needed
-          // Repeat this pattern for each radio button value
-          default:
-            // Default content if no matching value is found
-            heroSection.innerHTML = `
-              <div class="container is-max-desktop">
-                <!-- Abstract. -->
-                <div class="columns is-centered has-text-centered">
-                  <div class="column is-four-fifths">
-                    <h2 class="title is-3">Abstract</h2>
-                    <div class="content has-text-justified">
-                      <p>
-                        Unkown abstract.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Abstract. -->
-              </div>
-              `;
-        }
-      }
-
-      // Trigger change event for checked radio button on page load
-      var checkedRadio = document.querySelector('input[name="menu"]:checked');
-      if (checkedRadio) {
-        changeContent(checkedRadio);
-      }
-
-      // Add change event listener to all radio buttons
-      radios.forEach(function (radio) {
-        radio.addEventListener("change", function () {
-          changeContent(this);
-        });
-      });
-    });
   </script>
 
   <section class="section hero">
@@ -636,7 +543,7 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
         author={Berton, Gabriele and Goletto, Gabriele and Trivigno, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
         booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR-W)},
         year={2024}
-    }</code></pre>
+      }</code></pre>
     </div>
   </section>
 
