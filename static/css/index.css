@@ -178,6 +178,9 @@ img {
   top: 0;
   z-index: 1000; /* Ensure the navbar appears above other content */
   background-color: #fff; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+  width: 100%; /* Adjust as needed */
+  font-size: 20px; /* Adjust as needed */
 }
 
 .navbar-start {
