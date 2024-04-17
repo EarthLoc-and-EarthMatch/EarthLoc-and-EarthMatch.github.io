@@ -125,30 +125,33 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
     </div>
   </section>
 
-
-
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
+  <nav class="navbar" role="navigation" aria-label="main navigation" style="flex-grow: 1; justify-content: center;">
+    <div class="toggle-switch navbar-item">
+      <span class="toggle-text"><b>EarthLoc</b></span>
+      <label class="switch">
+        <input type="checkbox" id="toggle" name="menu" value="earthloc" onclick="toggleSwitch()">
+        <span class="slider-switch round"></span>
+      </label>
+      <span class="toggle-text"><b>EarthMatch</b></span>
     </div>
-    <div class="navbar-menu">
-      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-        <div class="navbar-item">
-          <input type="radio" id="earthloc" name="menu" class="navbar-radio" checked value="earthloc"
-            style="transform: scale(1.5); margin-right: 5px;">
-          EarthLoc
-          <input type="radio" id="earthmatch" name="menu" class="navbar-radio" value="earthmatch"
-            style="transform: scale(1.5); margin-left: 10px;">
-          EarthMatch
-        </div>
-      </div>
-    </div>
-
   </nav>
+  
+  <script>
+    function toggleSwitch() {
+      var toggle = document.getElementById("toggle");
+    
+      if (toggle.checked) {
+        toggle.value = "earthmatch";
+      } else {
+        toggle.value = "earthloc";
+      }
+      toggle.dispatchEvent(new Event('change'));
+    }
+
+    window.onload = function() {
+      toggleSwitch();
+    };
+  </script>
 
 
 
@@ -620,68 +623,22 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
 
 
   <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@inproceedings{berton2024earthloc,
+        title={EarthLoc: Astronaut Photography Localization by Indexing Earth from Space},
+        author={Berton, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
+        booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+        year={2024}
+      }</code></pre>
+      <pre><code>@inproceedings{berton2024earthmath,
+        title={EarthMatch: Iterative Coregistration for Fine-grained Localization of Astronaut Photography},
+        author={Berton, Gabriele and Goletto, Gabriele and Trivigno, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
+        booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR-W)},
+        year={2024}
+    }</code></pre>
+    </div>
   </section>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var radios = document.querySelectorAll('input[name="menu"]');
-      var heroSection = document.querySelector('#BibTeX');
-
-      // Function to change content based on selected radio button
-      function changeContent(radio) {
-        switch (radio.value) {
-          case "earthloc":
-            heroSection.innerHTML = `
-              <div class="container is-max-desktop content">
-                <h2 class="title">BibTeX</h2>
-                <pre><code>@inproceedings{berton2024earthloc,
-                  title={EarthLoc: Astronaut Photography Localization by Indexing Earth from Space},
-                  author={Berton, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
-                  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-                  year={2024}
-                }</code></pre>
-              </div>`;
-            break;
-          case "earthmatch":
-            heroSection.innerHTML = `
-              <div class="container is-max-desktop content">
-                <h2 class="title">BibTeX</h2>
-                <pre><code>@inproceedings{berton2024earthmath,
-                  title={EarthMatch: Iterative Coregistration for Fine-grained Localization of Astronaut Photography},
-                  author={Berton, Gabriele and Goletto, Gabriele and Trivigno, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
-                  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR-W)},
-                  year={2024}
-              }</code></pre>
-              </div>`;
-            break;
-          // Add cases for other radio button values as needed
-          // Repeat this pattern for each radio button value
-          default:
-            // Default content if no matching value is found
-            heroSection.innerHTML = `
-              <div class="container is-max-desktop content">
-                <h2 class="title">BibTeX</h2>
-                <pre><code>@inproceedings{
-              }</code></pre>
-              </div>`;
-        }
-      }
-
-      // Trigger change event for checked radio button on page load
-      var checkedRadio = document.querySelector('input[name="menu"]:checked');
-      if (checkedRadio) {
-        changeContent(checkedRadio);
-      }
-
-      // Add change event listener to all radio buttons
-      radios.forEach(function (radio) {
-        radio.addEventListener("change", function () {
-          changeContent(this);
-        });
-      });
-    });
-  </script>
-
 
 
   <footer class="footer">
