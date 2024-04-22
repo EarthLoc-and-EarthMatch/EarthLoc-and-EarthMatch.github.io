@@ -556,6 +556,7 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
     const c0Container = document.getElementById('c0');
     const csContainer = document.getElementById('cs');
     const match_id = document.getElementById('match_id');
+    const slider = document.getElementById('interpolation-slider');
     const qual_values = JSON.parse('{' +
       '"Steerers_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
       '"Steerers_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;false",' +
@@ -621,6 +622,8 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
       let imageUrlPred;
       let imageUrlQual;
       let pred = qual_values[method + '_' + qualitative].split(';')[0];
+      let is_good = qual_values[method + '_' + qualitative].split(';')[1];
+      is_good = is_good == 'true';
 
       if (method && qualitative) {
         imageUrlPred = `${basePath}${method}/${qualitative}/00/pred_${pred}.jpg`;
@@ -633,7 +636,17 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
       csContainer.setAttribute('src', `${basePath}${method}/${qualitative}/00/surrounding_img.jpg`);
       imageContainerPred.setAttribute('src', imageUrlPred);
       imageContainerQual.setAttribute('src', imageUrlQual);
-      match_id.innerHTML = `Matching iteration (max: ${String(Number(pred)+1)}):`;
+      if (Number(pred) == 0){
+        if (is_good){
+          match_id.innerHTML = `Matching iteration (max: ${String(Number(pred)+1)}).`;
+        } else {
+          match_id.innerHTML = `No matches found!`;
+        }
+        slider.style.display = 'none';
+      } else {
+        match_id.innerHTML = `Matching iteration (max: ${String(Number(pred)+1)}):`;
+        slider.style.display = 'block';
+      }
 
       preloadInterpolationImages(method, qualitative);
       $('#interpolation-slider').on('input', function(event) {
