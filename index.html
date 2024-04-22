@@ -491,7 +491,8 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
             <div class="content2" style="display: flex; padding-top: 10px; text-align: center;">
               <div id="image-container" style="width: 33.33%; padding-bottom: 0px; margin: 0; padding-right: 5px;">
                 <h5>Comparison</h5>
-                <div class="image-compare" data-before-label="Photo" data-after-label="Localized Area">
+                <div id="text-placeholder" style="display: none;"></div>
+                <div class="image-compare" data-before-label="Photo" data-after-label="Localized Area" id="image-compare-container">
                   <img id='pred' />
                   <img id='qual' />
                 </div>
@@ -557,55 +558,57 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
     const csContainer = document.getElementById('cs');
     const match_id = document.getElementById('match_id');
     const slider = document.getElementById('interpolation-slider');
+    const textPlaceholder = document.getElementById('text-placeholder');
+    const imageCompareContainer = document.getElementById('image-compare-container');
     const qual_values = JSON.parse('{' +
-      '"Steerers_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
-      '"Steerers_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;false",' +
-      '"Steerers_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;false",' +
-      '"Steerers_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "3;true",' +
-      '"Steerers_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
-      '"Steerers_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false",' +
-      '"SuperPoint-SuperGlue_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
-      '"SuperPoint-SuperGlue_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true",' +
-      '"SuperPoint-SuperGlue_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true",' +
-      '"SuperPoint-SuperGlue_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true",' +
-      '"SuperPoint-SuperGlue_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
-      '"SuperPoint-SuperGlue_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false",' +
-      '"ALIKED_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
-      '"ALIKED_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;false",' +
-      '"ALIKED_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true",' +
-      '"ALIKED_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true",' +
-      '"ALIKED_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
-      '"ALIKED_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "1;true",' +
-      '"RoMa_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
-      '"RoMa_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true",' +
-      '"RoMa_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true",' +
-      '"RoMa_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "3;true",' +
-      '"RoMa_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
-      '"RoMa_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;true",' +
-      '"SIFT-NN_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "0;true",' +
-      '"SIFT-NN_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true",' +
-      '"SIFT-NN_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true",' +
-      '"SIFT-NN_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;false",' +
-      '"SIFT-NN_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
-      '"SIFT-NN_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false",' +
-      '"LoFTR_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
-      '"LoFTR_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true",' +
-      '"LoFTR_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "1;true",' +
-      '"LoFTR_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "2;true",' +
-      '"LoFTR_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
-      '"LoFTR_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;true",' +
-      '"SIFT-LG_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
-      '"SIFT-LG_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;false",' +
-      '"SIFT-LG_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;false",' +
-      '"SIFT-LG_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true",' +
-      '"SIFT-LG_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
-      '"SIFT-LG_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false",' +
-      '"DogHardNet_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
-      '"DogHardNet_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true",' +
-      '"DogHardNet_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true",' +
-      '"DogHardNet_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true",' +
-      '"DogHardNet_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
-      '"DogHardNet_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "1;true"}');
+      '"Steerers_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true;true",' +
+      '"Steerers_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;false;false",' +
+      '"Steerers_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;false;false",' +
+      '"Steerers_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "3;true;true",' +
+      '"Steerers_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true;true",' +
+      '"Steerers_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false;false",' +
+      '"SuperPoint-SuperGlue_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true;true",' +
+      '"SuperPoint-SuperGlue_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true;false",' +
+      '"SuperPoint-SuperGlue_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true;false",' +
+      '"SuperPoint-SuperGlue_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true;false",' +
+      '"SuperPoint-SuperGlue_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true;true",' +
+      '"SuperPoint-SuperGlue_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false;false",' +
+      '"ALIKED_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true;true",' +
+      '"ALIKED_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;false;false",' +
+      '"ALIKED_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true;false",' +
+      '"ALIKED_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true;false",' +
+      '"ALIKED_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true;true",' +
+      '"ALIKED_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "1;true;false",' +
+      '"RoMa_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true;true",' +
+      '"RoMa_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true;false",' +
+      '"RoMa_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true;false",' +
+      '"RoMa_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "3;true;true",' +
+      '"RoMa_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true;true",' +
+      '"RoMa_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;true;false",' +
+      '"SIFT-NN_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "0;true;false",' +
+      '"SIFT-NN_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true;false",' +
+      '"SIFT-NN_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true;false",' +
+      '"SIFT-NN_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;false;false",' +
+      '"SIFT-NN_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true;true",' +
+      '"SIFT-NN_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false;false",' +
+      '"LoFTR_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true;true",' +
+      '"LoFTR_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true;false",' +
+      '"LoFTR_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "1;true;false",' +
+      '"LoFTR_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "2;true;false",' +
+      '"LoFTR_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true;true",' +
+      '"LoFTR_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;true;false",' +
+      '"SIFT-LG_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true;true",' +
+      '"SIFT-LG_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;false;false",' +
+      '"SIFT-LG_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;false;false",' +
+      '"SIFT-LG_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true;false",' +
+      '"SIFT-LG_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true;true",' +
+      '"SIFT-LG_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false;false",' +
+      '"DogHardNet_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true;true",' +
+      '"DogHardNet_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true;false",' +
+      '"DogHardNet_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true;false",' +
+      '"DogHardNet_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true;false",' +
+      '"DogHardNet_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true;true",' +
+      '"DogHardNet_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "1;true;false"}');
 
     methodDropdown.addEventListener('change', () => {
       const selectedMethod = methodDropdown.value;
@@ -624,6 +627,8 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
       let pred = qual_values[method + '_' + qualitative].split(';')[0];
       let is_good = qual_values[method + '_' + qualitative].split(';')[1];
       is_good = is_good == 'true';
+      let is_good_pred = qual_values[method + '_' + qualitative].split(';')[2];
+      is_good_pred = is_good_pred == 'true';
 
       if (method && qualitative) {
         imageUrlPred = `${basePath}${method}/${qualitative}/00/pred_${pred}.jpg`;
@@ -634,8 +639,19 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
       queryContainer.setAttribute('src', `${basePath}${method}/${qualitative}/00/${qualitative}.jpg`);
       c0Container.setAttribute('src', `${basePath}${method}/${qualitative}/00/pred_0.jpg`);
       csContainer.setAttribute('src', `${basePath}${method}/${qualitative}/00/surrounding_img.jpg`);
-      imageContainerPred.setAttribute('src', imageUrlPred);
-      imageContainerQual.setAttribute('src', imageUrlQual);
+      if (is_good_pred){
+        imageContainerPred.setAttribute('src', imageUrlPred);
+        imageContainerQual.setAttribute('src', imageUrlQual);
+        textPlaceholder.style.display = 'none';
+        imageCompareContainer.style.display = 'block';
+      } else {
+        imageContainerPred.setAttribute('src', '');
+        imageContainerQual.setAttribute('src', '');
+        textPlaceholder.innerHTML = 'No prediction';
+        textPlaceholder.style.display = 'block';
+        imageCompareContainer.style.display = 'none';
+
+      }
       if (Number(pred) == 0){
         if (is_good){
           match_id.innerHTML = `Matching iteration (max: ${String(Number(pred)+1)}).`;
