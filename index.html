@@ -392,6 +392,48 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
 
   <section class="section hero is-light">
     <div class="container is-max-desktop">
+      <!-- Animation. -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content">
+            <h2 class="title is-3" style="text-align: center;">Matching iterations</h2>
+            <div class="content has-text-justified">
+              <p>
+                The procedure starts with matching the query $Q$ and the candidate $C_0$
+                to produce a first homography $H_0$. The candidate surroundings $C_s$ is generated and $H_0$ applied to
+                produce $C_1$. $C_1$ is then matched with
+                $Q$, producing $H_2$ which applied to $C_s$ yields $C_2$. This iterative process continues for a fixed
+                number of iterations or until convergence.
+                Note the number of inlier matches increases steadily for each iteration. Use the slider to observe the
+                different matching iterations.
+              </p>
+            </div>
+            <br />
+            <!--/ Interpolating. -->
+            <div class="columns is-multiline">
+              <div class="column is-half">
+                <img src="./static/images/qualitative/gifs/gif1.gif" alt="GIF 1">
+              </div>
+              <div class="column is-half">
+                <img src="./static/images/qualitative/gifs/gif2.gif" alt="GIF 2">
+              </div>
+              <div class="column is-half">
+                <img src="./static/images/qualitative/gifs/gif3.gif" alt="GIF 3">
+              </div>
+              <div class="column is-half">
+                <img src="./static/images/qualitative/gifs/gif4.gif" alt="GIF 4">
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <!--/ Animation. -->
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
 
       <div class="columns is-centered">
 
@@ -420,44 +462,189 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
 
       <div class="columns is-centered">
 
-        <!-- Qualitative Results. -->
         <div class="column is-full-width">
           <div class="content">
-            <h2 class="title is-3" style="text-align: center;">Qualitative results</h2>
-            <div class="switcher">
-              <div data-switcher-label="Qualitative 1" class="image-compare" data-before-label="Photo"
-                data-after-label="Localized Area">
-                <img src="./static/images/qualitative/pred1.jpg" />
-                <img src="./static/images/qualitative/qual1.jpg" />
+            <h2>Qualitative results</h2>
+            <div class="content2" style="display: flex; text-align: center;">
+              <div style="flex-grow: 1; padding-bottom: 0px; margin: 0; padding-left: 5px;">
+                <h5>Query</h5>
               </div>
-              <div data-switcher-label="Qualitative 2" class="image-compare" data-before-label="Photo"
-                data-after-label="Localized Area">
-                <img src="./static/images/qualitative/pred2.jpg" />
-                <img src="./static/images/qualitative/qual2.jpg" />
+              <div style="flex-grow: 1; padding-bottom: 0px; margin: 0; padding-left: 5px;">
+                <h5>$C_0$</h5>
               </div>
-              <div data-switcher-label="Qualitative 3" class="image-compare" data-before-label="Photo"
-                data-after-label="Localized Area">
-                <img src="./static/images/qualitative/pred3.jpg" />
-                <img src="./static/images/qualitative/qual3.jpg" />
+              <div style="flex-grow: 1; padding-bottom: 0px; margin: 0; padding-left: 5px;">
+                <h5>$C_s$</h5>
               </div>
-              <div data-switcher-label="Qualitative 4" class="image-compare" data-before-label="Photo"
-                data-after-label="Localized Area">
-                <img src="./static/images/qualitative/pred4.jpg" />
-                <img src="./static/images/qualitative/qual4.jpg" />
+            </div>
+            <div class="content2" style="display: flex;">
+              <div style="flex-grow: 1; padding-bottom: 0px; margin: 0; padding-left: 5px;">
+                <img id='query' />
               </div>
-              <div data-switcher-label="Qualitative 5" class="image-compare" data-before-label="Photo"
-                data-after-label="Localized Area">
-                <img src="./static/images/qualitative/pred5.jpg" />
-                <img src="./static/images/qualitative/qual5.jpg" />
+              <div style="flex-grow: 1; padding-bottom: 0px; margin: 0; padding-left: 5px;">
+                <img id='c0' />
+              </div>
+              <div style="flex-grow: 1; padding-bottom: 0px; margin: 0; padding-left: 5px;">
+                <img id='cs' />
               </div>
             </div>
 
+            <div class="content2" style="display: flex; padding-top: 10px; text-align: center;">
+              <div id="image-container" style="width: 33.33%; padding-bottom: 0px; margin: 0; padding-right: 5px;">
+                <h5>Comparison</h5>
+                <div class="image-compare" data-before-label="Photo" data-after-label="Localized Area">
+                  <img id='pred' />
+                  <img id='qual' />
+                </div>
+              </div>
+              <div class="interpolation-panel" style="width: 66.66%;">
+                <h5>Matching steps</h5>
+                <div class="column interpolation-video-column">
+                  <div id="interpolation-image-wrapper">
+                    Loading...
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field" style="padding-top: 20px; display: flex; overflow-x: auto; justify-content: space-between; align-items: center; ">
+              <div class="control" style="flex: 1; align-items: center; text-align: center;">
+                <label class="label">Method:</label>
+                <div class="select">
+                  <select id="method-dropdown">
+                    <option value="RoMa" selected>RoMa</option>
+                    <option value="SIFT-NN">SIFT-NN</option>
+                    <option value="SuperPoint-SuperGlue">SuperPoint-SuperGlue</option>
+                    <option value="Steerers">Steerers</option>
+                    <option value="ALIKED">ALIKED</option>
+                    <option value="DogHardNet">DogHardNet</option>
+                    <option value="SIFT-LG">SIFT-LG</option>
+                    <option value="LoFTR">LoFTR</option>
+                  </select>
+                </div>
+              </div>
+              <div class="control" style="flex: 2; align-items: center; text-align: center;">
+                <label class="label" id="match_id">Matching iteration:</label>
+                <input class="slider is-fullwidth is-large is-info" id="interpolation-slider" step="1" min="0" max="100"
+                  value="0" type="range">
+              </div>
+              <div class="control" style="flex: 1; align-items: center; text-align: center;">
+                <label class="label">Qualitative Result:</label>
+                <div class="select">
+                  <select id="qualitative-dropdown">
+                    <option value="@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@" selected>Qualitative 1</option>
+                    <option value="@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@">Qualitative 2</option>
+                    <option value="@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@">Qualitative 3</option>
+                    <option value="@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@">Qualitative 4</option>
+                    <option value="@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@">Qualitative 5</option>
+                    <option value="@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@">Qualitative 6</option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <!--/ Qualitative Results. -->
       </div>
     </div>
   </section>
+
+  <script>
+    const methodDropdown = document.getElementById('method-dropdown');
+    const qualitativeDropdown = document.getElementById('qualitative-dropdown');
+    const imageContainerPred = document.getElementById('pred');
+    const imageContainerQual = document.getElementById('qual');
+    const queryContainer = document.getElementById('query');
+    const c0Container = document.getElementById('c0');
+    const csContainer = document.getElementById('cs');
+    const match_id = document.getElementById('match_id');
+    const qual_values = JSON.parse('{' +
+      '"Steerers_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
+      '"Steerers_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;false",' +
+      '"Steerers_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;false",' +
+      '"Steerers_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "3;true",' +
+      '"Steerers_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
+      '"Steerers_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false",' +
+      '"SuperPoint-SuperGlue_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
+      '"SuperPoint-SuperGlue_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true",' +
+      '"SuperPoint-SuperGlue_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true",' +
+      '"SuperPoint-SuperGlue_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true",' +
+      '"SuperPoint-SuperGlue_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
+      '"SuperPoint-SuperGlue_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false",' +
+      '"ALIKED_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
+      '"ALIKED_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;false",' +
+      '"ALIKED_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true",' +
+      '"ALIKED_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true",' +
+      '"ALIKED_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
+      '"ALIKED_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "1;true",' +
+      '"RoMa_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
+      '"RoMa_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true",' +
+      '"RoMa_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true",' +
+      '"RoMa_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "3;true",' +
+      '"RoMa_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
+      '"RoMa_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;true",' +
+      '"SIFT-NN_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "0;true",' +
+      '"SIFT-NN_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true",' +
+      '"SIFT-NN_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true",' +
+      '"SIFT-NN_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;false",' +
+      '"SIFT-NN_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
+      '"SIFT-NN_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false",' +
+      '"LoFTR_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
+      '"LoFTR_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true",' +
+      '"LoFTR_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "1;true",' +
+      '"LoFTR_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "2;true",' +
+      '"LoFTR_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
+      '"LoFTR_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;true",' +
+      '"SIFT-LG_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
+      '"SIFT-LG_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;false",' +
+      '"SIFT-LG_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;false",' +
+      '"SIFT-LG_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true",' +
+      '"SIFT-LG_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
+      '"SIFT-LG_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "0;false",' +
+      '"DogHardNet_@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@": "3;true",' +
+      '"DogHardNet_@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@": "0;true",' +
+      '"DogHardNet_@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@": "0;true",' +
+      '"DogHardNet_@38.0@138.2@38.4@134.9@42@140@10@ISS064-E-58991@": "0;true",' +
+      '"DogHardNet_@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@": "3;true",' +
+      '"DogHardNet_@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@": "1;true"}');
+
+    methodDropdown.addEventListener('change', () => {
+      const selectedMethod = methodDropdown.value;
+      updateImage(selectedMethod, qualitativeDropdown.value);
+    });
+
+    qualitativeDropdown.addEventListener('change', () => {
+      const selectedMethod = methodDropdown.value;
+      updateImage(selectedMethod, qualitativeDropdown.value);
+    });
+
+    function updateImage(method, qualitative) {
+      const basePath = './static/images/qualitative/';
+      let imageUrlPred;
+      let imageUrlQual;
+      let pred = qual_values[method + '_' + qualitative].split(';')[0];
+
+      if (method && qualitative) {
+        imageUrlPred = `${basePath}${method}/${qualitative}/00/pred_${pred}.jpg`;
+        imageUrlQual = `${basePath}${method}/${qualitative}/00/${qualitative}.jpg`;
+      } else {
+        imageUrlPred = '';
+      }
+      queryContainer.setAttribute('src', `${basePath}${method}/${qualitative}/00/${qualitative}.jpg`);
+      c0Container.setAttribute('src', `${basePath}${method}/${qualitative}/00/pred_0.jpg`);
+      csContainer.setAttribute('src', `${basePath}${method}/${qualitative}/00/surrounding_img.jpg`);
+      imageContainerPred.setAttribute('src', imageUrlPred);
+      imageContainerQual.setAttribute('src', imageUrlQual);
+      match_id.innerHTML = `Matching iteration (max: ${String(Number(pred)+1)}):`;
+
+      preloadInterpolationImages(method, qualitative);
+      $('#interpolation-slider').on('input', function(event) {
+        setInterpolationImage(this.value);
+      });
+      setInterpolationImage(0);
+      $('#interpolation-slider').prop('max', pred);
+    }
+    // Trigger initial image update with default values
+    updateImage("RoMa", "@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@");
+  </script>
 
   <section class="section hero">
     <div class="container is-max-desktop">
@@ -480,54 +667,6 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
       </div>
     </div>
   </section>
-
-  <section class="section hero is-light">
-    <div class="container is-max-desktop">
-      <!-- Animation. -->
-      <div class="columns is-centered">
-        <div class="column is-full-width">
-          <div class="content">
-            <h2 class="title is-3" style="text-align: center;">Matching iterations</h2>
-            <div class="content has-text-justified">
-              <p>
-                The procedure starts with matching the query $Q$ and the candidate $C_0$
-                to produce a first homography $H_0$. The candidate surroundings $C_s$ is generated and $H_0$ applied to
-                produce $C_1$. $C_1$ is then matched with
-                $Q$, producing $H_2$ which applied to $C_s$ yields $C_2$. This iterative process continues for a fixed
-                number of iterations or until convergence.
-                Note the number of inlier matches increases steadily for each iteration. Use the slider to observe the
-                different matching iterations.
-              </p>
-            </div>
-            <div class="columns is-vcentered interpolation-panel">
-              <div class="column is-3 has-text-centered">
-                <img src="./static/images/qualitative_steps/start.jpg" class="interpolation-image"
-                  alt="Interpolate start reference image." />
-                <p>Photo query $Q$</p>
-              </div>
-              <div class="column interpolation-video-column">
-                <div id="interpolation-image-wrapper">
-                  Loading...
-                </div>
-                <input class="slider is-fullwidth is-large is-info" id="interpolation-slider" step="1" min="0" max="100"
-                  value="0" type="range">
-              </div>
-              <div class="column is-3 has-text-centered">
-                <img src="./static/images/qualitative_steps/big_img.jpg" class="interpolation-image"
-                  alt="Interpolation end reference image." />
-                <p class="is-bold">Candidate surroundings $C_s$</p>
-              </div>
-            </div>
-            <br />
-            <!--/ Interpolating. -->
-
-          </div>
-        </div>
-      </div>
-      <!--/ Animation. -->
-    </div>
-  </section>
-
 
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
