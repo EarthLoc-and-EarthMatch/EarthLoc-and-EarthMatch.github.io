@@ -111,11 +111,7 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
               Astronaut Photography</h1>
             <div class="content has-text-justified">
               <p>
-                The precise localization of astronaut photography is vital for various applications, including disaster
-                response, scientific research, and climate change studies. Despite its significance, accurately pinpointing the
-                geographical locations depicted in these images has proven challenging. Manual localization efforts are
-                time-consuming, prompting the need for automated solutions. The proposed approaches introduce innovative methods to
-                tackle this challenge efficiently, showcasing advancements in automating the localization process.
+              Astronauts on the International Space Station take thousands of photos per month, which are <a href="https://eol.jsc.nasa.gov/Collections/Disasters/ShowDisastersCollection.pl">used for disaster management and climate change studies</a>. Before being used however, these photos need to be localized: this was typically done manually, in a task that NASA defines <a href="https://www.youtube.com/watch?v=drrP_Iss0gA&t=4m55s">"monumentally important, but monumentally time-consuming job"</a>. This project provides an automatic localization pipeline, based on a large-scale image retrieval model (EarthLoc - CVPR 2024) and a coregistration method (EarthMatch - CVPRW 2024).
               </p>
               <img src="./static/images/task_animation.gif" />
             </div>
@@ -124,6 +120,24 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
       </div>
     </div>
   </section>
+  
+
+  <section class="section hero">
+    <div class="container is-max-desktop">
+
+      <div class="columns is-centered">
+
+        <div class="column is-full-width">
+          <div class="content">
+            <h2 class="title is-3" style="text-align: center;">Complete pipeline</h2>
+            <img src="./static/images/pipeline.png" />
+            The retrieval step finds a number of predictions for a query (the astronaut photo to be localized). The search is performed over a large database covering a huge area (the visible area from the ISS is 2M square km). The matching step takes the query and a candidate, and decides if the two images overlap and, if they do, it also provides an accurate coregistration.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
 
   <nav class="navbar" role="navigation" aria-label="main navigation" style="flex-grow: 1; justify-content: center;">
     <div class="toggle-switch navbar-item">
@@ -428,12 +442,9 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
     </div>
   </section>
 
-  <section class="section hero is-light">
+  <!-- <section class="section hero is-light">
     <div class="container is-max-desktop">
-
       <div class="columns is-centered">
-
-        <!-- Training strategy -->
         <div class="column is-full-width">
           <div class="content">
             <h2 class="title is-3" style="text-align: center;">Training strategy</h2>
@@ -446,10 +457,9 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
             more complex context.
           </div>
         </div>
-        <!--/ Training strategy -->
       </div>
     </div>
-  </section>
+  </section> -->
 
 
 
@@ -460,7 +470,7 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
 
         <div class="column is-full-width">
           <div class="content">
-            <h2 style="text-align: center;">Qualitative results</h2>
+            <h2 style="text-align: center;">Interactive qualitative results</h2>
             <div class="content2" style="display: flex; text-align: center;">
               <div style="flex-grow: 1; padding-bottom: 0px; margin: 0; padding-left: 5px;">
                 <h5>Query</h5>
@@ -525,7 +535,7 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
                   value="0" type="range">
               </div>
               <div class="control" style="flex: 1; align-items: center; text-align: center;">
-                <label class="label">Qualitative Result:</label>
+                <label class="label">Example:</label>
                 <div class="select">
                   <select id="qualitative-dropdown">
                     <option value="@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@" selected>Qualitative 1</option>
@@ -671,43 +681,23 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
     updateImage("RoMa", "@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@");
   </script>
 
-  <section class="section hero">
-    <div class="container is-max-desktop">
-
-      <div class="columns is-centered">
-
-        <!-- Training strategy -->
-        <div class="column is-full-width">
-          <div class="content">
-            <h2 class="title is-3" style="text-align: center;">Complete pipeline</h2>
-            <img src="./static/images/pipeline.png" />
-            We suggest a hierarchical pipeline for tackling the astronaut photography localization task
-            and accurately pinpointing astronaut photographs. Our method draws inspiration from
-            re-ranking strategies commonly employed in Image Retrieval and Visual Place Recognition.
-            Initially, a swift retrieval technique is utilized to generate a brief list of candidates.
-            Subsequently, a more resource-intensive matching process is employed to fine-tune the estimation.
-          </div>
-        </div>
-        <!--/ Training strategy -->
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@inproceedings{berton2024earthloc,
-        title={EarthLoc: Astronaut Photography Localization by Indexing Earth from Space},
-        author={Berton, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
-        booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-        year={2024}
-      }</code></pre>
-      <pre><code>@inproceedings{berton2024earthmath,
-        title={EarthMatch: Iterative Coregistration for Fine-grained Localization of Astronaut Photography},
-        author={Berton, Gabriele and Goletto, Gabriele and Trivigno, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
-        booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR-W)},
-        year={2024}
-      }</code></pre>
+      <pre><code>@InProceedings{Berton_CVPR_2024_EarthLoc,
+  author    = {Berton, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
+  title     = {EarthLoc: Astronaut Photography Localization by Indexing Earth from Space},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  month     = {June},
+  year      = {2024},
+}</code></pre>
+      <pre><code>@InProceedings{Berton_2024_EarthMatch,
+  author    = {Gabriele Berton, Gabriele Goletto, Gabriele Trivigno, Alex Stoken, Barbara Caputo, Carlo Masone},
+  title     = {EarthMatch: Iterative Coregistration for Fine-grained Localization of Astronaut Photography},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},
+  month     = {June},
+  year      = {2024},
+}</code></pre>
     </div>
   </section>
 
