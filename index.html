@@ -297,11 +297,11 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
         <div class="column is-full-width">
           <div class="content">
             <h2 class="title is-3" style="text-align: center;">Complete pipeline</h2>
-            <img src="./static/images/pipeline.png" />
             The retrieval step finds a number of predictions for a query (the astronaut photo to be localized). The
             search is performed over a large database covering a huge area (the visible area from the ISS is 2M square
-            km). The matching step takes the query and a candidate, and decides if the two images overlap and, if they
+            km). The matching step takes the query and a candidate, decides if the two images overlap and, if they
             do, it also provides an accurate coregistration.
+            <img src="./static/images/pipeline.png" />
           </div>
         </div>
       </div>
@@ -317,15 +317,19 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
         <div class="column is-full-width">
           <div class="content">
             <h2 class="title is-3" style="text-align: center;">Dataset</h2>
-            <div style="max-width: 70%; margin: auto;">
-              <img src="./static/images/database_animation_video.gif" />
-            </div>
             In order to determine the positions of the queries using image retrieval,
             it is necessary to have a global database of images, with each image tagged
             with its corresponding location. We create such a database using a publicly
             available compilation of <a rel="license" href="https://s2maps.eu/" target="_blank">Sentinel-2 satellite
               imagery</a>,
             which offers cloudless coverage of landmasses worldwide with resolutions of up to 15 meters per pixel.
+            As shown in the animation, images are sampled at different resolutions and are rotated 4 times, to 
+            ease the retrieval's job. Images are also sampled from different years, which makes the retrieval model
+            more robust after training. For more info, check
+            <a rel="license" href="https://arxiv.org/abs/2403.06758" target="_blank">the EarthLoc paper</a>.
+            <div style="max-width: 70%; margin: auto;">
+              <img src="./static/images/database_animation_video.gif" />
+            </div>
           </div>
         </div>
         <!--/ Dataset -->
@@ -342,13 +346,15 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
             <h2 class="title is-3" style="text-align: center;">Matching iterations</h2>
             <div class="content has-text-justified">
               <p>
-                The procedure starts with matching the query $Q$ and the candidate $C_0$
+                The procedure starts with matching the query $Q$ (left) and the candidate $C_0$ (right)
                 to produce a first homography $H_0$. The candidate surroundings $C_s$ is generated and $H_0$ applied to
                 produce $C_1$. $C_1$ is then matched with
                 $Q$, producing $H_2$ which applied to $C_s$ yields $C_2$. This iterative process continues for a fixed
                 number of iterations or until convergence.
                 Note the number of inlier matches increases steadily for each iteration. Use the slider to observe the
                 different matching iterations.
+                For more info, check the EarthMatch paper.
+                Below are four visualizations of a query and how the candidate changes across iterations (while applying homography).
               </p>
             </div>
             <br />
@@ -403,7 +409,7 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
 
         <div class="column is-full-width">
           <div class="content">
-            <h2 style="text-align: center;">Interactive qualitative results</h2>
+            <h2 style="text-align: center;">Interactive qualitative results (try it yourself!)</h2>
             <div class="content2" style="display: flex; text-align: center;">
               <div style="flex-grow: 1; padding-bottom: 0px; margin: 0; padding-left: 5px;">
                 <h5>Query</h5>
