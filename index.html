@@ -108,16 +108,16 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 style="margin-top:0;" class="title is-1 publication-title">Automated Geolocalization Techniques for
-              Astronaut Photography</h1>
-              <img src="./static/images/logos.png" alt="Logo" style="margin: 0 auto; max-width: 40%;" />
+              Astronaut Photography of Earth</h1>
+              <!-- <img src="./static/images/logos.png" alt="Logo" style="margin: 0 auto; max-width: 40%;" /> -->
             <div class="content has-text-justified">
               <p>
-                Astronauts on the International Space Station take thousands of photos per month, which are <a
-                  href="https://eol.jsc.nasa.gov/Collections/Disasters/ShowDisastersCollection.pl">used for disaster
-                  management and climate change studies</a>. Before being used however, these photos need to be
-                localized: this was typically done manually, in a task that NASA defines <a
-                  href="https://www.youtube.com/watch?v=drrP_Iss0gA&t=4m55s">"monumentally important, but monumentally
-                  time-consuming job"</a>. This project provides an automatic localization pipeline, based on a
+                Astronauts on the International Space Station take thousands of photos each month, which are <a
+                href="https://eol.jsc.nasa.gov/Collections/Disasters/ShowDisastersCollection.pl">used for disaster
+                management</a>, climate change studies, and other earth science research. Hoever, before a photo can be used, it must be
+                localized: this was historically done manually, in a task that NASA defines as <a
+                href="https://www.youtube.com/watch?v=drrP_Iss0gA&t=4m55s">"monumentally important, but monumentally
+                time-consuming job"</a>. This project provides an automatic localization pipeline, based on a
                 large-scale image retrieval model (EarthLoc - CVPR 2024) and a coregistration method (EarthMatch - CVPRW
                 2024).
               </p>
@@ -306,11 +306,10 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
 
         <div class="column is-full-width">
           <div class="content">
-            <h2 class="title is-3" style="text-align: center;">Complete pipeline</h2>
-            The retrieval step finds a number of predictions for a query (the astronaut photo to be localized). The
-            search is performed over a large database covering a huge area (the visible area from the ISS is 2M square
-            km). The matching step takes the query and a candidate, decides if the two images overlap and, if they
-            do, it also provides an accurate coregistration.
+            <h2 class="title is-3" style="text-align: center;">From photo to geographic position</h2>
+            Each astronaut photo to be localized is passed through the trained EarthLoc model, to get a feature embedding. We take the top N nearest database embeddings as tentative location candidates. The
+            database covers a huge area - the 2M square km visible at that time from the ISS. Then, the matching step takes the astronaut photo query and a candidate, decides if the two images overlap and, if they
+            do, accurately coregister the photo.
             <img src="./static/images/pipeline.png" />
           </div>
         </div>
@@ -326,17 +325,19 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
         <!-- Dataset -->
         <div class="column is-full-width">
           <div class="content">
-            <h2 class="title is-3" style="text-align: center;">Dataset</h2>
-            In order to determine the positions of the queries using image retrieval,
-            it is necessary to have a global database of images, with each image tagged
-            with its corresponding location. We create such a database using a publicly
+            <h2 class="title is-3" style="text-align: center;">Database and Training Set</h2>
+            In order to determine positions via image retrieval,
+            it is necessary to have a global database of geotagged images. We create such a database using a publicly
             available compilation of <a rel="license" href="https://s2maps.eu/" target="_blank">Sentinel-2 satellite
               imagery</a>,
             which offers cloudless coverage of landmasses worldwide with resolutions of up to 15 meters per pixel.
             As shown in the animation, images are sampled at different resolutions and are rotated 4 times, to 
-            ease the retrieval's job. Images are also sampled from different years, which makes the retrieval model
-            more robust after training. For more info, check
+            simplify the retrieval task. These multi-scale and rotated images form our retreival database. 
+            For training, images are also sampled from different years, which makes the model more robust to natural variations in Earth features. 
+            For further details, see Section 3 of 
             <a rel="license" href="https://arxiv.org/abs/2403.06758" target="_blank">the EarthLoc paper</a>.
+            <br>
+            <br>
             <div style="max-width: 70%; margin: auto;">
               <img src="./static/images/database_animation_video.gif" />
             </div>
@@ -353,18 +354,18 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
       <div class="columns is-centered">
         <div class="column is-full-width">
           <div class="content">
-            <h2 class="title is-3" style="text-align: center;">Matching iterations</h2>
+            <h2 class="title is-3" style="text-align: center;">Fine-grained Matching via Iteration</h2>
             <div class="content has-text-justified">
               <p>
-                The procedure starts with matching the query $Q$ (left) and the candidate $C_0$ (right)
-                to produce a first homography $H_0$. The candidate surroundings $C_s$ is generated and $H_0$ applied to
-                produce $C_1$. $C_1$ is then matched with
-                $Q$, producing $H_2$ which applied to $C_s$ yields $C_2$. This iterative process continues for a fixed
+                Once we have a location candidate from EarthLoc-based retreival, we apply the EarthMatch procedure. We begin with matching the astronaut photo query $Q$ (left) and the candidate $C_0$ (right)
+                to produce a first homography $H_0$. Since applying this homography directly to $C_0$ may produce uncovered regions, if the query and candidate do not well overlap, we generate the candidate surroundings $C_s$ and apply $H_0$ to this
+                larger area to produce $C_1$. $C_1$ is then matched with
+                $Q$, producing $H_2$ which applied to a new $C_s$ yields $C_2$. This iterative process continues for a fixed
                 number of iterations or until convergence.
-                Note the number of inlier matches increases steadily for each iteration. Use the slider to observe the
+                In general, the number of inlier matches increases steadily for each iteration. Use the slider to observe the
                 different matching iterations.
-                For more info, check the EarthMatch paper.
-                Below are four visualizations of a query and how the candidate changes across iterations (while applying homography).
+                For more info, see Section 3.2 of <a rel="license" href="https://arxiv.org/abs/2405.05422.pdf" target="_blank">the EarthMatch paper</a>..
+                Below are four visualizations of a query and how the candidate changes across iterations while applying the computed homography.
               </p>
             </div>
             <br />
@@ -489,11 +490,11 @@ https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
                 <label class="label">Example:</label>
                 <div class="select">
                   <select id="qualitative-dropdown">
-                    <option value="@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@" selected>Qualitative 1</option>
-                    <option value="@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@">Qualitative 2</option>
-                    <option value="@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@">Qualitative 3</option>
-                    <option value="@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@">Qualitative 4</option>
-                    <option value="@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@">Qualitative 5</option>
+                    <option value="@-51.1@-73.0@-49.8@-71.8@26@1600@25@ISS054-E-21023@" selected>Chilean Lake</option>
+                    <option value="@0.1@36.6@-4.2@35.4@49@420@75@ISS064-E-46242@">Kenyan Desert</option>
+                    <option value="@19.8@-90.5@19.2@-90.2@10@500@25@ISS062-E-81917@">Campeche, Mexico</option>
+                    <option value="@31.0@87.0@32.1@85.8@23@50@10@ISS062-E-24032@">Gobi Desert</option>
+                    <option value="@44.8@-83.6@46.7@-83.6@28@1600@25@ISS056-E-153176@">Great Lakes, USA</option>
                   </select>
                 </div>
               </div>
