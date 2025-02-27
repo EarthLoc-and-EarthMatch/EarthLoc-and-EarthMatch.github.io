@@ -11,7 +11,7 @@ If you find EarthLoc and EarthMatch useful for your work please cite:
   year={2024}
 }
 
-@inproceedings{berton2024earthmath,
+@inproceedings{berton2024earthmatch,
     title={EarthMatch: Iterative Coregistration for Fine-grained Localization of Astronaut Photography},
     author={Berton, Gabriele and Goletto, Gabriele and Trivigno, Gabriele and Stoken, Alex and Caputo, Barbara and Masone, Carlo},
     booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR-W)},
